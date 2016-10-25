@@ -7,10 +7,7 @@ import com.dmitring.trippledata.utils.AssertFutureUtil
 import com.dmitring.trippledata.utils.ThrowableUtil
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
 import org.mockito.ArgumentCaptor
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.junit4.SpringRunner
 
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.locks.Lock
@@ -18,13 +15,11 @@ import java.util.concurrent.locks.ReentrantLock
 import java.util.function.Function
 import java.util.function.Supplier
 
-import static org.junit.Assert.assertEquals
-import static org.junit.Assert.assertNull
-import static org.junit.Assert.assertTrue
+import static org.junit.Assert.*
+import static org.mockito.Matchers.any
+import static org.mockito.Matchers.eq
 import static org.mockito.Mockito.*
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = JobProcessServiceImplTest.class)
 class JobProcessServiceImplTest {
 
     TestJobsFactory testJobFactory = new TestJobsFactory()

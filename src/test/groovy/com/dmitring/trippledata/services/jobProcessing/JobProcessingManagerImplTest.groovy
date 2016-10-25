@@ -5,9 +5,6 @@ import com.dmitring.trippledata.domain.TestJobsFactory
 import com.dmitring.trippledata.services.JobStateMachine
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.junit4.SpringRunner
 
 import java.util.function.Supplier
 
@@ -15,8 +12,6 @@ import static org.mockito.Matchers.any
 import static org.mockito.Matchers.eq
 import static org.mockito.Mockito.*
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = JobProcessingManagerImplTest.class)
 class JobProcessingManagerImplTest {
 
     TestJobsFactory testJobsFactory = new TestJobsFactory()

@@ -8,15 +8,11 @@ import com.dmitring.trippledata.repositories.JobRepository
 import com.dmitring.trippledata.services.jobProcessing.JobTimer
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.junit4.SpringRunner
 
-import static org.mockito.Mockito.*
-import static org.junit.Assert.*
+import static org.junit.Assert.assertEquals
+import static org.mockito.Mockito.mock
+import static org.mockito.Mockito.when
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = JobProcessServiceImplTest.class)
 class JobDisplayServiceImplTest {
 
     TestJobsFactory testJobsFactory = new TestJobsFactory()

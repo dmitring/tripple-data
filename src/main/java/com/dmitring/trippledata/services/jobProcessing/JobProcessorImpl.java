@@ -30,7 +30,6 @@ public class JobProcessorImpl implements JobProcessor {
 
     @Override
     @SneakyThrows
-    //TODO: close stream test
     public String execute(Job job, Supplier<Boolean> jobStopCondition) {
         if (jobStopCondition.get())
             return null;

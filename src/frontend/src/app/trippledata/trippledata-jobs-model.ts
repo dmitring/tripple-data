@@ -8,8 +8,6 @@ import {TrippledataJobsService} from "./services/trippledata-jobs-service";
 import {TrippleDataClientService} from "./services/tripple-data-client-service";
 import {TrippledataErrorModel} from "./trippledata-error-model";
 
-//TODO: display successful operations
-
 @Injectable()
 export class TrippledataJobsModel {
   jobs:TrippleDataJobEntity[];

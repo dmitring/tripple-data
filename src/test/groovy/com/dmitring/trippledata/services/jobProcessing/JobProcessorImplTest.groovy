@@ -6,22 +6,14 @@ import com.dmitring.trippledata.domain.JobStatus
 import com.dmitring.trippledata.domain.TestJobsFactory
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.junit4.SpringRunner
 
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.function.Supplier
 
-import static org.junit.Assert.assertEquals
-import static org.junit.Assert.assertFalse
-import static org.junit.Assert.assertNull
+import static org.junit.Assert.*
 import static org.mockito.Matchers.any
-import static org.mockito.Mockito.mock
-import static org.mockito.Mockito.when
+import static org.mockito.Mockito.*
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = JobProcessorImplTest.class)
 class JobProcessorImplTest {
 
     TestJobsFactory testJobFactory = new TestJobsFactory()
@@ -51,7 +43,7 @@ class JobProcessorImplTest {
     }
 
     void testHash(HashingAlgorithm algorithm, byte[] source, String outputHexHash) {
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(source)
+        InputStream inputStream = spy(new ByteArrayInputStream(source))
         when(mockJobInputStreamProvider.getInputStream(any(String.class))).thenReturn(inputStream)
         Job job = testJobFactory.createJobWithAlgorithmAndStatus(algorithm, JobStatus.PROCESSING)
         Supplier<Boolean> stopCondition = {false}
@@ -66,7 +58,7 @@ class JobProcessorImplTest {
         AtomicBoolean stopConditionVariable = new AtomicBoolean(false);
         AtomicBoolean didReadsAfterStopDetected = new AtomicBoolean(false);
         InputStream stubInputStream = new InputStream() {
-            volatile int readCount = 0
+            int readCount = 0
             @Override
             int read() throws IOException {
                 if (readCount == 10)
@@ -79,9 +71,13 @@ class JobProcessorImplTest {
                 Thread.sleep(1)
                 return 100
             }
+            @Override
+            void close() {
+                System.out.println("closed")
+            }
         }
         when(mockJobInputStreamProvider.getInputStream(any(String.class))).thenReturn(stubInputStream)
-        Job someJob = testJobFactory.createJobWithAlgorithmAndStatus(HashingAlgorithm.SHA1, JobStatus.PROCESSING)
+        Job someJob = testJobFactory.createJobWithStatus(JobStatus.PROCESSING)
         Supplier<Boolean> stopCondition = {stopConditionVariable.get()}
 
         String result = jobProcessor.execute(someJob, stopCondition)

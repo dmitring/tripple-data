@@ -8,16 +8,11 @@ import com.dmitring.trippledata.services.jobProcessing.JobTimer
 import com.dmitring.trippledata.services.jobProcessing.StackTraceCollector
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.junit4.SpringRunner
 
+import static org.junit.Assert.assertEquals
+import static org.mockito.Matchers.eq
 import static org.mockito.Mockito.*
-import static org.junit.Assert.*
 
-//TODO: убрать отовсюду
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = JobStateMachineImplTest.class)
 class JobStateMachineImplTest {
 
     TestJobsFactory testJobsFactory = new TestJobsFactory()
@@ -147,6 +142,4 @@ class JobStateMachineImplTest {
         assertEquals(currentTime, resultJob.endProcessingTime)
         verify(mockJobRepository).save(eq(resultJob))
     }
-
-    //TODO: incorrect transformations
 }
