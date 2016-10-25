@@ -1,0 +1,81 @@
+<div class="trippledata-jobs-table">
+  <p-dataTable [value]="jobsModel.jobs" [resizableColumns]="true">
+    <p-column field="id" header="Job id"></p-column>
+
+    <p-column field="sourceUri" header="Source URI"></p-column>
+
+    <p-column field="hashingAlgorithm" header="Hashing algorithm">
+      <template let-col let-job="rowData" pTemplate type="body">
+        {{job.hashingAlgorithm.label}}
+      </template>
+    </p-column>
+
+    <p-column field="status" header="Job status">
+      <template let-col let-job="rowData" pTemplate type="body">
+        {{job.status.label}}
+      </template>
+    </p-column>
+
+    <p-column field="status" header="Result">
+      <template let-col let-job="rowData" pTemplate type="body">
+        <span *ngIf="job.status.value=='COMPLETED'">
+          {{job.hexHash}}
+        </span>
+        <span *ngIf="job.status.value=='FAILED'">
+          {{job.stackTrace}}
+        </span>
+        <span *ngIf="job.status.value!='COMPLETED' && job.status.value!='FAILED'">
+            -
+        </span>
+      </template>
+    </p-column>
+
+    <p-column header="Timings">
+      <template let-job="rowData" pTemplate type="body">
+        <span *ngIf="job.status.value=='WAITING'">
+          <div>
+            wait time = {{job.totalWaitTime}}ms
+          </div>
+        </span>
+        <span *ngIf="job.status.value!='WAITING'">
+          <div>
+            wait time = {{job.totalWaitTime}}ms
+          </div>
+          <div>
+            process time = {{job.processingTime}}ms
+          </div>
+        </span>
+      </template>
+    </p-column>
+
+    <p-column header="Actions">
+      <template pTemplate type="header">
+        <p-dialog header="Add job" [(visible)]="displayAddDialog" modal="modal">
+          <div class="trippledata-add-job-form-row">
+            <span class="">Url</span>
+            <input type="text" pInputText [(ngModel)]="addingUrl" class="trippledata-add-job-form-input"/>
+          </div>
+          <div class="trippledata-add-job-form-row">
+            <span class="trippledata-add-job-form-row-label">Hash algorithm</span>
+            <div class="trippledata-add-job-form-input">
+              <p-dropdown [options]="algorithms" [(ngModel)]="hashingAlgorithm" [style]="{'width':'55px'}"></p-dropdown>
+            </div>
+          </div>
+          <footer>
+            <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+              <button type="button" pButton icon="fa-close" (click)="hideAddJobDialog()" label="No"></button>
+              <button type="button" pButton icon="fa-check" (click)="addJob()" label="Yes"></button>
+            </div>
+          </footer>
+        </p-dialog>
+        <button type="text" (click)="showAddJobDialog()" pButton icon="fa-external-link-square" label="Add job"></button>
+      </template>
+      <template let-job="rowData" pTemplate type="body">
+        <div *ngIf="job.isCancellable()" class="trippledata-job-cancel-button">
+          <button pButton type="button" (click)="cancelJob(job)" label="Cancel job"></button>
+        </div>
+      </template>
+    </p-column>
+
+  </p-dataTable>
+</div>

@@ -1,0 +1,21 @@
+logging:
+  level:
+    org:
+      springframework:
+        web: ERROR
+    com:
+      dmitring:
+        trippledata: ERROR
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+
+com:
+  dmitring:
+    trippledata:
+      inputBufferSize: 4096
+      urlConnectionTimeout: 4000
+      urlReadTimeout: 2000

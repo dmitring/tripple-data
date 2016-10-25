@@ -1,0 +1,24 @@
+logging:
+  level:
+    org:
+      springframework:
+        web: ERROR
+    com:
+      dmitring:
+        trippledata: INFO
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost/trippledata
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+com:
+  dmitring:
+    trippledata:
+      inputBufferSize: 4096
+      urlConnectionTimeout: 4000
+      urlReadTimeout: 2000
